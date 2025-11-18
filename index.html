@@ -611,6 +611,15 @@
  .animated {
    animation: fadeUp 0.6s ease forwards;
  }
+ 
+ .fade {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.fade.show {
+  opacity: 1;
+}
+
  </style>
 </head>
 <body>
@@ -639,9 +648,6 @@
      <h1 class="en">Nguyen Van Anh</h1>
      <p class="vi">Sinh viên ngành Công nghệ Thông tin</p>
      <p class="en">Information Technology Student</p>
-     
-     <!-- Nút đổi slogan -->
-     <button id="changeSloganBtn">Đổi câu giới thiệu</button>
    </div>
  </header>
 
@@ -898,30 +904,43 @@
  </div>
 
  <script>
- // 1. Đổi slogan khi bấm nút
- const sloganVi = document.querySelector('header p.vi');
- const sloganEn = document.querySelector('header p.en');
- const changeSloganBtn = document.getElementById('changeSloganBtn');
- 
- const slogansVi = [
-   'Sinh viên ngành Công nghệ Thông tin',
-   'Người yêu thích phát triển website & AI',
-   'Luôn học hỏi và thử thách bản thân'
- ];
- 
- const slogansEn = [
-   'Information Technology Student',
-   'Web Development & AI Enthusiast',
-   'Always learning and challenging myself'
- ];
- 
- let sloganIndex = 0;
- 
- changeSloganBtn.addEventListener('click', () => {
-   sloganIndex = (sloganIndex + 1) % slogansVi.length;
-   sloganVi.textContent = slogansVi[sloganIndex];
-   sloganEn.textContent = slogansEn[sloganIndex];
- });
+ // 1. Đổi slogan sau mỗi 3 giây
+ const slogansVI = [
+    "Sinh viên ngành Công nghệ Thông tin",
+    "Đam mê lập trình và phát triển web",
+    "Luôn học hỏi và sáng tạo mỗi ngày"
+  ];
+
+  const slogansEN = [
+    "Information Technology Student",
+    "Passionate about Web Development",
+    "Learning and creating every day"
+  ];
+
+  const sloganVI = document.querySelector("header p.vi");
+  const sloganEN = document.querySelector("header p.en");
+
+  let index = 0;
+
+  function changeSlogan() {
+    index = (index + 1) % slogansVI.length;
+
+    sloganVI.classList.remove("show");
+    sloganEN.classList.remove("show");
+
+    setTimeout(() => {
+      sloganVI.textContent = slogansVI[index];
+      sloganEN.textContent = slogansEN[index];
+
+      sloganVI.classList.add("show");
+      sloganEN.classList.add("show");
+    }, 600);
+  }
+
+  sloganVI.classList.add("fade", "show");
+  sloganEN.classList.add("fade", "show");
+
+  setInterval(changeSlogan, 5000);
 
  // 2. Chuyển đổi ngôn ngữ
  const changeLanguageBtn = document.getElementById('changeLanguageBtn');
@@ -1022,5 +1041,4 @@
  window.addEventListener('scroll', checkIfInView);
  </script>
 </body>
-
 </html>
